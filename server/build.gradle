@@ -22,6 +22,8 @@ dependencies {
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
+mainClassName = 'tech.takenoko.server.ServerKt'
+
 
 compileKotlin {
     kotlinOptions { jvmTarget = "1.8" }

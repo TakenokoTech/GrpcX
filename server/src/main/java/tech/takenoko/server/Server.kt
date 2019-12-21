@@ -43,4 +43,22 @@ class GreeterImpl : GreeterGrpc.GreeterImplBase() {
         println("<--------- reply")
         println("$reply")
     }
+
+    override fun streamHello(responseObserver: StreamObserver<HelloReply>?): StreamObserver<HelloRequest> = object: StreamObserver<HelloRequest> {
+        override fun onNext(value: HelloRequest?) {
+            val reply1 = HelloReply.newBuilder().setMessage("Hello ${value?.name} 1").build()
+            responseObserver?.onNext(reply1)
+            // responseObserver?.onCompleted()
+            println("---------> request")
+            println("${value?.name}")
+        }
+        override fun onError(t: Throwable?) {
+            println("<--------- error")
+            println("${t}")
+        }
+        override fun onCompleted() {
+            println("<--------- reply")
+            responseObserver?.onCompleted()
+        }
+    }
 }

@@ -2,6 +2,7 @@ package tech.takenoko.grpcx
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.InternalCoroutinesApi
 import tech.takenoko.grpcx.view.MainFragment
 
 class MainActivity : AppCompatActivity() {
