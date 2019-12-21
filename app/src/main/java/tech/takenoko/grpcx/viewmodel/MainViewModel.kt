@@ -17,8 +17,8 @@ class MainViewModel : ViewModel() {
     private val _listLiveData = MediatorLiveData<List<String>>()
     val listLiveData: LiveData<List<String>> = _listLiveData
 
-    private val mainUsecase = StreamUsecase(App.context, viewModelScope)
-    // private val mainUsecase = ChannelUsecase(App.context, viewModelScope)
+    // private val mainUsecase = StreamUsecase(App.context, viewModelScope)
+    private val mainUsecase = ChannelUsecase(App.context, viewModelScope)
 
     init {
         _listLiveData.postValue(listOf())
