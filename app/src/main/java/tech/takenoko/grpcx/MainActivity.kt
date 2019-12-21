@@ -1,8 +1,9 @@
 package tech.takenoko.grpcx
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import tech.takenoko.grpcx.ui.main.MainFragment
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.InternalCoroutinesApi
+import tech.takenoko.grpcx.view.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,5 +16,4 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
     }
-
 }
