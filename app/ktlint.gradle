@@ -12,6 +12,7 @@ task ktlint(type: JavaExec, group: "verification") {
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
     args "src/**/*.kt", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    ignoreExitValue true
 }
 check.dependsOn ktlint
 
