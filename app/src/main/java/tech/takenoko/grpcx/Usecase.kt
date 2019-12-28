@@ -11,25 +11,27 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import tech.takenoko.grpcx.entities.UsecaseResult
 import tech.takenoko.grpcx.utils.AppLog
+import kotlin.math.max
 
 abstract class Usecase<Q : Any, P : Any>(private val context: Context, private val scope: CoroutineScope) {
 
     protected var result = MediatorLiveData<UsecaseResult<P>>()
     val source: LiveData<UsecaseResult<P>> = result
 
-    protected var _fpsLiveData = MediatorLiveData<Double>()
-    val fpsLiveData: LiveData<Double> = _fpsLiveData
+    // protected var _fpsLiveData = MediatorLiveData<Double>()
+    // val fpsLiveData: LiveData<Double> = _fpsLiveData
+
+    private val _fpsLiveData = MediatorLiveData<List<Long>>()
+    val fpsLiveData: LiveData<List<Long>> = _fpsLiveData
 
     @MainThread
     open fun execute(param: Q) {
-        val start = startFps()
         result.postValue(UsecaseResult.Pending())
         scope.launch {
             runCatching {
                 callAsync(param).await()
             }.fold({
                 // AppLog.info("Usecase", "execute.")
-                endFps(start)
                 result.postValue(UsecaseResult.Resolved(it))
             }, {
                 AppLog.warn("Usecase", it)
@@ -41,19 +43,18 @@ abstract class Usecase<Q : Any, P : Any>(private val context: Context, private v
     @WorkerThread
     protected abstract suspend fun callAsync(param: Q): Deferred<P>
 
-    private fun startFps(): Long {
-        return System.currentTimeMillis()
-    }
-
-    private fun endFps(first: Long) {
-        val last = System.currentTimeMillis()
-        time.add(last - first)
+    protected fun countFPS(name: String = "") {
+        time.add(System.currentTimeMillis())
         if (time.size == 30) {
-            val result = time.size / (time.sum() / 1000.0)
+            val list = (0 until time.size-1).map { time[it+1] - time[it] }
+            val result = list.size / (list.sum() / 1000.0)
             time = mutableListOf()
-            _fpsLiveData.postValue(result)
+            val newList = (_fpsLiveData.value?.toMutableList() ?: mutableListOf()).apply {add(result.toLong()) }.drop( max(0, (_fpsLiveData.value?.size ?: 0) - 30))
+            _fpsLiveData.postValue(newList)
+            AppLog.info("[%16s] >>>> ".format(name), "${newList.average()}")
         }
     }
 
+    private var first: Long = System.currentTimeMillis()
     private var time = mutableListOf<Long>()
 }

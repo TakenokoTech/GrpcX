@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import tech.takenoko.grpcx.App
 import tech.takenoko.grpcx.entities.UsecaseResult
-import tech.takenoko.grpcx.usecase.ChannelUsecase
-import tech.takenoko.grpcx.usecase.StreamUsecase
+import tech.takenoko.grpcx.usecase.unuse.ChannelUsecase
 
 class MainViewModel : ViewModel() {
 

@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import tech.takenoko.grpcx.App
 import tech.takenoko.grpcx.entities.UsecaseResult
-import tech.takenoko.grpcx.usecase.ChannelUsecase
 import tech.takenoko.grpcx.usecase.PollingUsecase
+import tech.takenoko.grpcx.usecase.RestUsecase
 import kotlin.math.max
-import kotlin.math.min
 
 class FpsViewModel : ViewModel() {
 
@@ -22,22 +21,40 @@ class FpsViewModel : ViewModel() {
     private val _fpsLiveData = MediatorLiveData<List<Long>>()
     val fpsLiveData: LiveData<List<Long>> = _fpsLiveData
 
-    private val pollingUsecase = PollingUsecase(App.context, viewModelScope)
+    val pollingUsecase = PollingUsecase(App.context, viewModelScope)
+    val restUsecase = RestUsecase(App.context, viewModelScope)
 
     init {
-        _listLiveData.postValue(listOf())
+        _listLiveData.postValue(listOf("", ""))
         _textLiveData.postValue("")
-        _textLiveData.addSource(pollingUsecase.source) { handler(it) }
+        _textLiveData.addSource(pollingUsecase.source) { pollingUsecaseHandler(it) }
+        _textLiveData.addSource(restUsecase.source) { restUsecaseHandler(it) }
 
         _fpsLiveData.postValue((0..100).map { 0L })
         pollingUsecase.execute(Unit)
+        restUsecase.execute(Unit)
     }
 
-    private fun handler(result: UsecaseResult<String>): Any = when (result) {
+    private fun pollingUsecaseHandler(result: UsecaseResult<String>): Any = when (result) {
         is UsecaseResult.Pending -> { }
         is UsecaseResult.Resolved -> {
             fps()
-            _listLiveData.value = listOf(result.value)
+            val list = _listLiveData.value?.toMutableList() ?: mutableListOf("", "")
+            list[0] = result.value
+            _listLiveData.value = list
+        }
+        is UsecaseResult.Rejected -> {
+            _textLiveData.value = result.reason.localizedMessage
+        }
+    }
+
+    private fun restUsecaseHandler(result: UsecaseResult<String>): Any = when (result) {
+        is UsecaseResult.Pending -> { }
+        is UsecaseResult.Resolved -> {
+            // fps()
+            val list = _listLiveData.value?.toMutableList() ?: mutableListOf("", "")
+            list[1] = result.value
+            _listLiveData.value = list
         }
         is UsecaseResult.Rejected -> {
             _textLiveData.value = result.reason.localizedMessage

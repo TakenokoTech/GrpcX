@@ -1,10 +1,7 @@
-package tech.takenoko.grpcx.usecase
+package tech.takenoko.grpcx.usecase.unuse
 
 import android.content.Context
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import kotlinx.coroutines.*
 import tech.takenoko.grpcx.Usecase
 import tech.takenoko.grpcx.entities.GrpcStreamObserver

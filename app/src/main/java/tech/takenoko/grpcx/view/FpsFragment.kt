@@ -61,11 +61,20 @@ class FpsFragment : Fragment() {
         recycler.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager(activity).orientation))
         viewModel.listLiveData.observe(this, Observer { list -> adapter.setItem(list) })
 
-        viewModel.fpsLiveData.observe(this, Observer { list ->
-            // val d = listOf(116, 111, 112, 121, 102, 83, 99, 101, 74, 105, 120, 112, 109, 102, 107, 93, 82, 99, 110)
-            val values = list.mapIndexed { index, i -> Entry(index.toFloat(), i.toFloat(), null, null) }
-            val set = LineDataSet(values, "Data")
-            chart.data = LineData(mutableListOf<ILineDataSet>().apply { add(set) })
+        viewModel.fpsLiveData.observe(this, Observer { _ ->
+
+            val list1 = viewModel.pollingUsecase.fpsLiveData.value ?: listOf()
+            val values1 = list1.mapIndexed { index, i -> Entry(index.toFloat(), i.toFloat(), null, null) }
+            val set1 = LineDataSet(values1, "Data").apply { setCircleColor(Color.rgb(96, 96, 255)) }
+
+            val list2 = viewModel.restUsecase.fpsLiveData.value ?: listOf()
+            val values2 = list2.mapIndexed { index, i -> Entry(index.toFloat(), i.toFloat(), null, null) }
+            val set2 = LineDataSet(values2, "Data").apply { setCircleColor(Color.rgb(255, 96, 96)) }
+
+            chart.data = LineData(mutableListOf<ILineDataSet>().apply {
+                add(set1)
+                add(set2)
+            })
             chart.notifyDataSetChanged()
             chart.invalidate()
         })

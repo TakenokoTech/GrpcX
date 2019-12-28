@@ -15,9 +15,12 @@ class PollingUsecase(context: Context, private val scope: CoroutineScope) : Usec
         while (true) withTimeoutOrNull(500) {
             launch { GrpcChannelRepository.helloChannelOnNext() }
             val it = GrpcChannelRepository.channel.receiveOrClosed().valueOrNull
-            AppLog.info(TAG, "receiveOrClosed. ${it}")
+            // AppLog.info(TAG, "receiveOrClosed. ${it}")
             return@withTimeoutOrNull when (it) {
-                is GrpcStreamObserver.OnNext<String> -> result.postValue(UsecaseResult.Resolved(it.value ?: ""))
+                is GrpcStreamObserver.OnNext<String> -> {
+                    countFPS(PollingUsecase::class.java.simpleName)
+                    result.postValue(UsecaseResult.Resolved(it.value ?: ""))
+                }
                 is GrpcStreamObserver.OnCompleted -> ""
                 is GrpcStreamObserver.OnError -> throw it.t ?: Error()
                 else -> ""

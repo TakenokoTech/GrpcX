@@ -1,4 +1,4 @@
-package tech.takenoko.grpcx.usecase
+package tech.takenoko.grpcx.usecase.unuse
 
 import android.content.Context
 import androidx.annotation.WorkerThread
@@ -35,6 +35,6 @@ open class ChannelUsecase(context: Context, private val scope: CoroutineScope) :
     }
 
     companion object {
-        private val TAG = StreamUsecase::class.java.simpleName
+        private val TAG = ChannelUsecase::class.java.simpleName
     }
 }
