@@ -1,6 +1,6 @@
 configurations { ktlint }
 
-task console_ktlint(type: JavaExec, group: "verification") {
+task ktlintOnConsole(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
