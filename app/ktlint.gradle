@@ -1,6 +1,6 @@
 configurations { ktlint }
 
-task console_ktlint(type: JavaExec, group: "verification") {
+task ktlintOnConsole(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
@@ -12,6 +12,7 @@ task ktlint(type: JavaExec, group: "verification") {
     main = "com.pinterest.ktlint.Main"
     classpath = configurations.ktlint
     args "src/**/*.kt", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    ignoreExitValue true
 }
 check.dependsOn ktlint
 

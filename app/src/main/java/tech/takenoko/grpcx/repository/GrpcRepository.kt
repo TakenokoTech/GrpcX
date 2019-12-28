@@ -2,23 +2,17 @@ package tech.takenoko.grpcx.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import io.grpc.ManagedChannelBuilder
 import io.grpc.stub.StreamObserver
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import tech.takenoko.grpcx.entities.GrpcStreamObserver
 import tech.takenoko.grpcx.proto.GreeterGrpc
 import tech.takenoko.grpcx.proto.HelloReply
 import tech.takenoko.grpcx.proto.HelloRequest
 import tech.takenoko.grpcx.utils.AppLog
-import java.text.SimpleDateFormat
-import java.util.*
 
-object GrpcRepository: BaseRepository() {
+object GrpcRepository : BaseRepository() {
 
     const val host = "192.168.0.106"
     const val port = 6565

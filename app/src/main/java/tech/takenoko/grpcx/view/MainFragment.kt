@@ -11,11 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.coroutines.InternalCoroutinesApi
 import tech.takenoko.grpcx.R
 import tech.takenoko.grpcx.databinding.MainFragmentBinding
 import tech.takenoko.grpcx.viewmodel.MainViewModel
-
 
 class MainFragment : Fragment() {
 

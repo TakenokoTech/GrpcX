@@ -12,20 +12,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import java.util.*
 import kotlinx.android.synthetic.main.fps_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.recycler
 import tech.takenoko.grpcx.R
 import tech.takenoko.grpcx.databinding.FpsFragmentBinding
 import tech.takenoko.grpcx.viewmodel.FpsViewModel
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 class FpsFragment : Fragment() {
 

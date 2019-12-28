@@ -4,11 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlin.math.max
 import tech.takenoko.grpcx.App
 import tech.takenoko.grpcx.entities.UsecaseResult
 import tech.takenoko.grpcx.usecase.PollingUsecase
 import tech.takenoko.grpcx.usecase.RestUsecase
-import kotlin.math.max
 
 class FpsViewModel : ViewModel() {
 
@@ -64,12 +64,12 @@ class FpsViewModel : ViewModel() {
     private fun fps() {
         time.add(System.currentTimeMillis())
         if (time.size == 30) {
-            val list = (0 until time.size-1).map { time[it+1] - time[it] }
+            val list = (0 until time.size - 1).map { time[it + 1] - time[it] }
             val result = list.size / (list.sum() / 1000.0)
             time = mutableListOf()
             _textLiveData.postValue("FPS: $result")
 
-            val newList = (_fpsLiveData.value?.toMutableList() ?: mutableListOf()).apply {add(result.toLong()) }.drop( max(0, (_fpsLiveData.value?.size ?: 0) - 100))
+            val newList = (_fpsLiveData.value?.toMutableList() ?: mutableListOf()).apply { add(result.toLong()) }.drop(max(0, (_fpsLiveData.value?.size ?: 0) - 100))
             _fpsLiveData.postValue(newList)
         }
     }
