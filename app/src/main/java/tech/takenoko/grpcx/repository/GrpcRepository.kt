@@ -42,30 +42,6 @@ object GrpcRepository: BaseRepository() {
         callbackObserver.onNext(request)
     }
 
-    fun helloChannelOnNext(): Channel<GrpcStreamObserver<String>> {
-        // AppLog.info(TAG, "helloChannelOnNext.")
-
-        val channel = Channel<GrpcStreamObserver<String>>()
-        val streamHello = stub.streamHello(object : StreamObserver<HelloReply> {
-            override fun onNext(value: HelloReply?) {
-                AppLog.info(TAG, "onNext. $value")
-                channel.offer(GrpcStreamObserver.OnNext(value?.message ?: ""))
-            }
-            override fun onError(t: Throwable?) {
-                AppLog.info(TAG, "onError. $t")
-                channel.offer(GrpcStreamObserver.OnError(t))
-            }
-            override fun onCompleted() {
-                AppLog.info(TAG, "onCompleted.")
-                channel.offer(GrpcStreamObserver.OnCompleted())
-            }
-        })
-
-        val request = HelloRequest.newBuilder().setName(" Again !!").build()
-        streamHello.onNext(request)
-        return channel
-    }
-
     private val _streamHelloLiveData = MediatorLiveData<GrpcStreamObserver<String>>()
     val streamHelloLiveData: LiveData<GrpcStreamObserver<String>> = _streamHelloLiveData
     private val observer = stub.streamHello(object : StreamObserver<HelloReply> {

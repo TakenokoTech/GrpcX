@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import tech.takenoko.grpcx.App
 import tech.takenoko.grpcx.entities.UsecaseResult
-import tech.takenoko.grpcx.usecase.ChannelUsecase
-import tech.takenoko.grpcx.usecase.StreamUsecase
+import tech.takenoko.grpcx.usecase.unuse.ChannelUsecase
 
 class MainViewModel : ViewModel() {
 
@@ -17,8 +16,8 @@ class MainViewModel : ViewModel() {
     private val _listLiveData = MediatorLiveData<List<String>>()
     val listLiveData: LiveData<List<String>> = _listLiveData
 
-    private val mainUsecase = StreamUsecase(App.context, viewModelScope)
-    // private val mainUsecase = ChannelUsecase(App.context, viewModelScope)
+    // private val mainUsecase = StreamUsecase(App.context, viewModelScope)
+    private val mainUsecase = ChannelUsecase(App.context, viewModelScope)
 
     init {
         _listLiveData.postValue(listOf())

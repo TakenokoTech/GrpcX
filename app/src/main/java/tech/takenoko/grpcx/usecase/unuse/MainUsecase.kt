@@ -1,10 +1,9 @@
-package tech.takenoko.grpcx.usecase
+package tech.takenoko.grpcx.usecase.unuse
 
 import android.content.Context
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.*
 import tech.takenoko.grpcx.Usecase
-import tech.takenoko.grpcx.entities.GrpcStreamObserver
 import tech.takenoko.grpcx.repository.GrpcRepository
 import tech.takenoko.grpcx.utils.AppLog
 

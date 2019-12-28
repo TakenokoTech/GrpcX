@@ -3,6 +3,7 @@ package tech.takenoko.grpcx
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.InternalCoroutinesApi
+import tech.takenoko.grpcx.view.FpsFragment
 import tech.takenoko.grpcx.view.MainFragment
 
 class MainActivity : AppCompatActivity() {
@@ -12,7 +13,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                // .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, FpsFragment.newInstance())
                 .commitNow()
         }
     }

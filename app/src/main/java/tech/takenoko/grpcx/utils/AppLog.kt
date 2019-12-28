@@ -7,7 +7,7 @@ object AppLog {
     private const val LOG_FORMAT: String = "<GrpcX>%s%s"
 
     private fun Boolean.toInt() = if (this) 1 else 0
-    private fun thread(): String = "[${Thread.currentThread().name}]"
+    private fun thread(): String = "" // ""[${Thread.currentThread().name}]"
 
     fun debug(tag: String?, msg: String) {
         if (BuildConfig.DEBUG) {
