@@ -24,7 +24,7 @@ open class ChannelUsecase(context: Context, private val scope: CoroutineScope) :
 
         return@async withTimeoutOrNull(3000) {
             val it = GrpcChannelRepository.channel.receiveOrClosed().valueOrNull
-            AppLog.info(TAG, "receiveOrClosed. ${it}")
+            AppLog.info(TAG, "receiveOrClosed. $it")
             return@withTimeoutOrNull when (it) {
                 is GrpcStreamObserver.OnNext<String> -> it.value ?: ""
                 is GrpcStreamObserver.OnCompleted -> ""

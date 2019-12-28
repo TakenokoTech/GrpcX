@@ -38,7 +38,7 @@ class MainViewModel : ViewModel() {
 
             var list = _listLiveData.value?.toMutableList() ?: mutableListOf()
             list.add(result.value)
-            list = list.drop( if(list.size > 5) 1 else 0).toMutableList()
+            list = list.drop(if (list.size > 5) 1 else 0).toMutableList()
             _listLiveData.value = list
 
             mainUsecase.execute(Unit)

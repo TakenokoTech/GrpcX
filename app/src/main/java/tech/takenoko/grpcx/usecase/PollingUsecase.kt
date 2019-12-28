@@ -6,7 +6,6 @@ import tech.takenoko.grpcx.Usecase
 import tech.takenoko.grpcx.entities.GrpcStreamObserver
 import tech.takenoko.grpcx.entities.UsecaseResult
 import tech.takenoko.grpcx.repository.GrpcChannelRepository
-import tech.takenoko.grpcx.utils.AppLog
 
 class PollingUsecase(context: Context, private val scope: CoroutineScope) : Usecase<Unit, String>(context, scope) {
 

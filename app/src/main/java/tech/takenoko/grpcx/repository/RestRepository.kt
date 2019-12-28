@@ -1,13 +1,11 @@
 package tech.takenoko.grpcx.repository
 
 import com.squareup.moshi.JsonClass
-import kotlinx.coroutines.Deferred
+import java.text.SimpleDateFormat
+import java.util.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 object RestRepository {
 
@@ -30,5 +28,3 @@ object RestRepository {
     @JsonClass(generateAdapter = true)
     data class HalloResponse(var result: String)
 }
-
-

@@ -5,13 +5,12 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import kotlin.math.max
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import tech.takenoko.grpcx.entities.UsecaseResult
 import tech.takenoko.grpcx.utils.AppLog
-import kotlin.math.max
 
 abstract class Usecase<Q : Any, P : Any>(private val context: Context, private val scope: CoroutineScope) {
 
@@ -46,10 +45,10 @@ abstract class Usecase<Q : Any, P : Any>(private val context: Context, private v
     protected fun countFPS(name: String = "") {
         time.add(System.currentTimeMillis())
         if (time.size == 30) {
-            val list = (0 until time.size-1).map { time[it+1] - time[it] }
+            val list = (0 until time.size - 1).map { time[it + 1] - time[it] }
             val result = list.size / (list.sum() / 1000.0)
             time = mutableListOf()
-            val newList = (_fpsLiveData.value?.toMutableList() ?: mutableListOf()).apply {add(result.toLong()) }.drop( max(0, (_fpsLiveData.value?.size ?: 0) - 30))
+            val newList = (_fpsLiveData.value?.toMutableList() ?: mutableListOf()).apply { add(result.toLong()) }.drop(max(0, (_fpsLiveData.value?.size ?: 0) - 30))
             _fpsLiveData.postValue(newList)
             AppLog.info("[%16s] >>>> ".format(name), "${newList.average()}")
         }
